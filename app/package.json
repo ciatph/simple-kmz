@@ -7,7 +7,7 @@
     "npm": "9.5.0"
   },
   "scripts": {
-    "dev": "gulp dev"
+    "dev": "./node_modules/.bin/gulp dev"
   },
   "license": "MIT",
   "devDependencies": {

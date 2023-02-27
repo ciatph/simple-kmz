@@ -5,19 +5,20 @@ services:
     container_name: simple-kmz-app
     image: simple-kmz-app:dev
     env_file:
-      - ./app/.env
+      - ./.env
     build:
-      context: .
+      context: ./app
       dockerfile: Dockerfile
       target: development
     networks:
       - simple-kmz-network
     volumes:
       - ./app:/opt/app
+      - /opt/app/node_modules
     ports:
       - "3000:3000"
 
 networks:
-  simple-kmz:
+  simple-kmz-network:
     name: simple-kmz-network
     external: false

@@ -4,7 +4,7 @@
   "description": "Raw HTML, CSS and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz).",
   "main": "",
   "scripts": {
-    "dev": "cd app && npm run dev"
+    "dev": "cd app && yarn dev"
   },
   "author": "",
   "license": "ISC"

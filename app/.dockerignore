@@ -3,4 +3,7 @@
 node_modules
 npm-debug.log
 Dockerfile
+*.zip
 .dockerignore
+.env
+
