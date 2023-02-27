@@ -52,8 +52,9 @@
         control.addOverlay(e.layer, e.name)
       })
 
-      // Load KMZ file relative to this script's location
-      kmz.load('philippines.kmz')
+      // Load KMZ file from a CORS-enabled web server
+      const firebase = 'https://kmz-server7.web.app/philippines.kmz'
+      kmz.load(firebase)
 
       const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
     }
@@ -63,6 +64,7 @@
   <h1>KMZ on Leaflet</h1>
   <p>Testing loading KMZ files on LeafletJS</p>
 
+  <!-- LeafletJS web map -->
   <div id="map"></div>
 </body>
 </html>
