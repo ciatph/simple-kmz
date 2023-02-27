@@ -10,12 +10,12 @@ The following dependecies are used for this project. Feel free to experiment usi
 2. nvm version 1.1.9 (for Windows)
 3. NodeJS 18.14.2 installed using nvm
    - node v18.14.2
-   - npm v8.5.0
+   - npm v9.5.0
 4. yarn v1.22.19
    - installed using NodeJS
 5. NodeJS modules (installed using yarn)
    - gulp v.4.0.2
-   - browser-sync v.2.27.10
+   - browser-sync v.2.27.12
 
 ## Installaation
 
@@ -23,14 +23,21 @@ The following dependecies are used for this project. Feel free to experiment usi
 `https://github.com/weaponsforge/livereload-basic.git`
 
 2. Install dependencies.<br>
-`yarn install`
+  ```
+  cd app
+  yarn install
+  ```
 
 ## Usage
 
 1. Run the localhost static website development environment.<br>
-`yarn dev`
+   - `npm run dev` or
+   - ```
+     cd yarn
+     yarn dev
+     ```
 
-2. Edit the existing static files from the ./public directory and wait for live reload. Your updates will reflect on the web browser.
+2. Edit the existing static files int the ./app/public directory and wait for live reload. Your updates will reflect on the web browser.
 
 3. View the development website on:<br>
 `http://localhost:3000`

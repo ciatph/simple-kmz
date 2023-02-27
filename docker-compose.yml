@@ -1,0 +1,23 @@
+version: "3"
+services:
+  # Simple webpack 5 app for development mode
+  simple-kmz-app:
+    container_name: simple-kmz-app
+    image: simple-kmz-app:dev
+    env_file:
+      - ./app/.env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    networks:
+      - simple-kmz-network
+    volumes:
+      - ./app:/opt/app
+    ports:
+      - "3000:3000"
+
+networks:
+  simple-kmz:
+    name: simple-kmz-network
+    external: false
