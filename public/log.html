@@ -64,6 +64,20 @@
       kmz.load(kmzFile)
 
       const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
+
+      // Log mouse coordinates on map
+      map.addEventListener('click', function (e) {
+        const { lat, lng } = e.latlng
+        console.log(lat, lng)
+
+        let logText = '<br><b>zoom:</b> ' + map.getZoom()
+        logText += '<br><b>coordinates</b><br>'
+        logText += lat + ', ' + lng
+
+        L.marker([lat, lng]).addTo(map)
+          .bindPopup(logText)
+          .openPopup()
+      })
     }
   </script>
 </head>
