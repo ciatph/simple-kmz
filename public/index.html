@@ -4,8 +4,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple KMZ on Leaflet</title>
+
+  <!-- LeafletJS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+
+  <!-- Custom CSS -->
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #map {
+      height: 800px;
+      width: 1200px;
+    }
+  </style>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+
+  <!-- Leaflet KMZ -->
+  <script src="https://unpkg.com/leaflet-kmz@latest/dist/leaflet-kmz.js"></script>
+
+  <!-- Custom JS -->
+  <script type="text/javascript">
+    function loadMap () {
+      const map = L.map('map', {
+        preferCanvas: true
+      })
+
+      map.setView([12.419614853889797, 120.77551644707285], 6)
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map)
+
+      // KMZ Layer (async)
+      const kmz = L.kmzLayer().addTo(map)
+
+      kmz.on('load', function (e) {
+        control.addOverlay(e.layer, e.name)
+      })
+
+      // Load KMZ file relative to this script's location
+      kmz.load('philippines.kmz')
+
+      const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
+    }
+  </script>
 </head>
-<body>
-  <h1>It Works!</h1>
+<body onload="loadMap()">
+  <h1>KMZ on Leaflet</h1>
+  <p>Testing loading KMZ files on LeafletJS</p>
+
+  <div id="map"></div>
 </body>
 </html>
