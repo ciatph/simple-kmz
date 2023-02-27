@@ -9,7 +9,6 @@ on:
 
   deploy-client:
     name: Deploy Client to Firebase Hosting
-    needs: lint-export-client
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
