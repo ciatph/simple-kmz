@@ -8,8 +8,8 @@ The following dependecies are used for this project. Feel free to experiment usi
 
 1. Windows 64-bit OS
 2. nvm version 1.1.9 (for Windows)
-3. NodeJS 16.14.2 installed using nvm
-   - node v16.14.2
+3. NodeJS 18.14.2 installed using nvm
+   - node v18.14.2
    - npm v8.5.0
 4. yarn v1.22.19
    - installed using NodeJS

@@ -1,12 +1,14 @@
 {
-  "name": "simple-kmz",
+  "name": "app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "",
+  "engines": {
+    "node": "18.14.2",
+    "npm": "9.5.0"
+  },
   "scripts": {
     "dev": "./node_modules/.bin/gulp dev"
   },
-  "repository": "https://github.com/ciatph/simple-kmz.git",
-  "author": "ciatph <ciat.ph@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "browser-sync": "^2.27.12",
