@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - dev
-      - firebase-hosting)
+      - firebase-hosting
 
 jobs:
   deploy-client:
