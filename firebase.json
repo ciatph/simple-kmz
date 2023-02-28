@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "webserver",
-    "public": "public",
+    "public": "app/public",
     "ignore": [
       "firebase.json",
       "**/.*",
