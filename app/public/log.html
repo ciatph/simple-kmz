@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple KMZ on Leaflet</title>
+
+  <!-- LeafletJS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+
+  <!-- Custom CSS -->
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+
+  <!-- Leaflet KMZ -->
+  <script src="https://unpkg.com/leaflet-kmz@latest/dist/leaflet-kmz.js"></script>
+
+  <!-- Custom JS -->
+  <script type="text/javascript">
+    function loadMap () {
+      const map = L.map('map', {
+        preferCanvas: true
+      })
+
+      // Map center
+      const center = [12.419614853889797, 120.77551644707285]
+
+      // Map zoom
+      const zoom = 6
+
+      map.setView(center, zoom)
+
+      // Basemap
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map)
+
+      // KMZ (async) Layer controller
+      const kmz = L.kmzLayer().addTo(map)
+
+      kmz.on('load', function (e) {
+        control.addOverlay(e.layer, e.name)
+      })
+
+      // Load a KMZ file from a CORS-enabled web server
+      const kmzFile = 'https://kmz-server.web.app/subprojects.kmz'
+      kmz.load(kmzFile)
+
+      const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
+
+      // Log mouse coordinates on map
+      map.addEventListener('click', function (e) {
+        const { lat, lng } = e.latlng
+        console.log(lat, lng)
+
+        let logText = '<br><b>zoom:</b> ' + map.getZoom()
+        logText += '<br><b>coordinates</b><br>'
+        logText += lat + ', ' + lng
+
+        L.marker([lat, lng]).addTo(map)
+          .bindPopup(logText)
+          .openPopup()
+      })
+    }
+  </script>
+</head>
+<body onload="loadMap()">
+  <h1 style="text-align: center;">Consolidated Climate Risk Assessments</h1>
+
+  <!-- LeafletJS web map -->
+  <div id="map"></div>
+</body>
+</html>

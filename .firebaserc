@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "adb-demo"
+  },
+  "targets": {
+    "adb-demo": {
+      "hosting": {
+        "webserver": [
+          "kmz-server"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

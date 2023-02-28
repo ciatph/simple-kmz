@@ -1,0 +1,11 @@
+{
+  "name": "simple-kmz",
+  "version": "1.0.0",
+  "description": "Raw HTML, CSS and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz).",
+  "main": "",
+  "scripts": {
+    "dev": "cd app && yarn dev"
+  },
+  "author": "",
+  "license": "ISC"
+}
