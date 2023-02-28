@@ -38,18 +38,11 @@
         preferCanvas: true
       })
 
-<<<<<<< HEAD:app/public/index.html
-      const center = [16.688816956180833, 105.4852294921875]
-      const zoom = 8
-
-      map.setView(center, zoom)
-=======
       // Map center
-      const center = [12.419614853889797, 120.77551644707285]
->>>>>>> dev:public/index.html
+      const center = [16.688816956180833, 105.4852294921875]
 
       // Map zoom
-      const zoom = 6
+      const zoom = 8
 
       map.setView(center, zoom)
 
@@ -66,15 +59,9 @@
         control.addOverlay(e.layer, e.name)
       })
 
-<<<<<<< HEAD:app/public/index.html
       // Load KMZ file from a CORS-enabled web server
       const firebase = 'https://kmz-server.web.app/LAO-CFAVC-Output-1-subprojects.kmz'
       kmz.load(firebase)
-=======
-      // Load a KMZ file from a CORS-enabled web server
-      const kmzFile = 'https://kmz-server.web.app/subprojects.kmz'
-      kmz.load(kmzFile)
->>>>>>> dev:public/index.html
 
       const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
     }
