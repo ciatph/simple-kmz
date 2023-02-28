@@ -2,3 +2,4 @@ node_modules/
 .firebase
 *.zip
 .env
+edit.html
