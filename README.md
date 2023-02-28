@@ -1,6 +1,6 @@
 ## simple-kmz
 
-**simple-kmz** is a raw HTML, CSS, and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz) (uses webpack).
+**simple-kmz** is a raw HTML, CSS, and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz) (which uses webpack).
 This version uses gulp + browser-sync for live reload and does not bundle the static files for output.
 
 ### Dependencies
