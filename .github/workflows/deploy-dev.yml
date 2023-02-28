@@ -15,10 +15,6 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
-      - name: Copy firebase deploy settings
-        run: |
-          cp app/firebase.json .
-          cp app/.firebaserc .
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
