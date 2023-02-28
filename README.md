@@ -1,6 +1,7 @@
 ## simple-kmz
 
-Raw HTML, CSS and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz).
+**simple-kmz** is a raw HTML, CSS, and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz) (which uses webpack).
+This version uses gulp + browser-sync for live reload and does not bundle the static files for output.
 
 ### Dependencies
 
@@ -22,7 +23,7 @@ The following dependecies are used for this project. Feel free to experiment usi
 We can install and use the app by installing its dependencies manually, on a development machine, or by running its [Docker container](#installation-using-docker).
 
 1. Clone this repository.<br>
-`https://github.com/weaponsforge/livereload-basic.git`
+`(https://github.com/ciatph/simple-kmz.git`
 
 2. Set up the environment variables. Create a `.env` file inside the root project directory with reference to the `.env.example` file.
 
