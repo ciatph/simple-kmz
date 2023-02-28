@@ -50,6 +50,9 @@ We can install and use the app by installing its dependencies manually, on a dev
 3. View the development website on:<br>
 `http://localhost:3000`
 
+4. View the current map zoom level and map coordinates on mouseclick on:<br>
+`http://localhost:3000/log.html`
+
 ## Installation Using Docker
 
 We can optionally use Docker to run a dockerized client app for local development. The following methods require a correctly installed setup of Docker and Docker compose on your development machine.
