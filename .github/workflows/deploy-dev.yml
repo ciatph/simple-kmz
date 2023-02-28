@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - dev
+      - feature/ciatph-4)
 
 jobs:
   deploy-client:
@@ -14,6 +15,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+      - name: Change working directory
+        run: cd app
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
