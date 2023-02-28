@@ -24,7 +24,7 @@ We can install and use the app by installing its dependencies manually, on a dev
 1. Clone this repository.<br>
 `https://github.com/weaponsforge/livereload-basic.git`
 
-2. Set up the environment variables. Create a `.env` file inside the **/app** project directory with reference to the `/app/.env.example` file.
+2. Set up the environment variables. Create a `.env` file inside the root project directory with reference to the `.env.example` file.
 
    | Variable       | Description                                                                                                                                                                                                                                                                             |
    | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

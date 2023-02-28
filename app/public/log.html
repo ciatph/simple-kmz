@@ -60,6 +60,18 @@
       kmz.load(firebase)
 
       const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
+
+      map.addEventListener('click', function(e) {
+        const { lat, lng } = e.latlng
+        let logMessage = '<b>zoom:</b> ' + map.getZoom()
+        logMessage += '<br><b>coordinates:</b><br>'
+        logMessage += lat + ', ' + lng
+
+        // Log map coordinates
+        L.marker([lat, lng]).addTo(map)
+          .bindPopup(logMessage)
+          .openPopup()
+      })
     }
   </script>
 </head>
