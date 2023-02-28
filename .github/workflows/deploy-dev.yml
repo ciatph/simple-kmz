@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - dev
-      - feature/ciatph-4
 
 jobs:
   deploy-client:
