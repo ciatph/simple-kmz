@@ -18,7 +18,7 @@ jobs:
       - name: Copy firebase deploy settings
         run: |
           cp app/firebase.json .
-          cp app/.firebasesrc .
+          cp app/.firebaserc .
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
