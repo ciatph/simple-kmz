@@ -38,38 +38,44 @@
         preferCanvas: true
       })
 
-      const center = [16.688816956180833, 105.4852294921875]
-      const zoom = 8
+      // Map center
+      const center = [12.419614853889797, 120.77551644707285]
+
+      // Map zoom
+      const zoom = 6
 
       map.setView(center, zoom)
 
+      // Basemap
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map)
 
-      // KMZ Layer (async)
+      // KMZ (async) Layer controller
       const kmz = L.kmzLayer().addTo(map)
 
       kmz.on('load', function (e) {
         control.addOverlay(e.layer, e.name)
       })
 
-      // Load KMZ file from a CORS-enabled web server
-      const firebase = 'https://kmz-server.web.app/LAO-CFAVC-Output-1-subprojects.kmz'
-      kmz.load(firebase)
+      // Load a KMZ file from a CORS-enabled web server
+      const kmzFile = 'https://kmz-server.web.app/subprojects.kmz'
+      kmz.load(kmzFile)
 
       const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
 
-      map.addEventListener('click', function(e) {
+      // Log mouse coordinates on map
+      map.addEventListener('click', function (e) {
         const { lat, lng } = e.latlng
-        let logMessage = '<b>zoom:</b> ' + map.getZoom()
-        logMessage += '<br><b>coordinates:</b><br>'
-        logMessage += lat + ', ' + lng
+        console.log(lat, lng)
 
-        // Log map coordinates
+        let logText = '<br><b>zoom:</b> ' + map.getZoom()
+        logText += '<br><b>coordinates</b><br>'
+        logText += lat + ', ' + lng
+
         L.marker([lat, lng]).addTo(map)
-          .bindPopup(logMessage)
+          .bindPopup(logText)
           .openPopup()
       })
     }
