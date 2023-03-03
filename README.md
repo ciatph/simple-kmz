@@ -6,6 +6,8 @@ This project uses CORS-enabled Firebase Hosting to host KMZ and other static fil
 
 This repository also serves as an entry point for uploading KMZ files to Firebase Hosting. Read the instructions in the [Uploading Data to Firebase Hosting](#uploading-data-to-firebase-hosting) section for more information on uploading data.
 
+KMZ, other static files, and an assessment of various web mapping libraries are available at: https://kmz-server.web.app/
+
 - [simple-kmz](#simple-kmz)
   - [Dependencies](#dependencies)
 - [Installation](#installation)
