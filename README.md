@@ -1,7 +1,20 @@
 ## simple-kmz
 
-**simple-kmz** is a raw HTML, CSS, and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz) (which uses webpack).
-This version uses gulp + browser-sync for live reload and does not bundle the static files for output.
+**simple-kmz** is a raw HTML, CSS, and JavaScript version of [webmap-kmz](https://github.com/ciatph/webmap-kmz) (which uses webpack). This version uses gulp + browser-sync for live reload and does not bundle the static files for output.
+
+This project uses CORS-enabled Firebase Hosting to host KMZ and other static files. Every successful deployment thru GitHub Actions or using the firebase cli applies the CORS settings defined in the [`firebase.json`](/firebase.json) file to the defined Firebase Hosting project and website target.
+
+This repository also serves as an entry point for uploading KMZ files to Firebase Hosting. Read the instructions in the [Uploading Data to Firebase Hosting](#uploading-data-to-firebase-hosting) section for more information on uploading data.
+
+- [simple-kmz](#simple-kmz)
+  - [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Installation Using Docker](#installation-using-docker)
+  - [Docker Dependencies](#docker-dependencies)
+  - [Docker for Localhost Development](#docker-for-localhost-development)
+- [Uploading Data to Firebase Hosting](#uploading-data-to-firebase-hosting)
+- [Using the Uploaded Data](#using-the-uploaded-data)
 
 ### Dependencies
 
@@ -46,7 +59,7 @@ We can install and use the app by installing its dependencies manually, on a dev
      yarn dev
      ```
 
-2. Edit the existing static files int the `/app/public` directory and wait for live reload. Your updates will reflect on the web browser.
+2. Edit the existing static files int the `"/app/public"` directory and wait for live reload. Your updates will reflect on the web browser.
 
 3. View the development website on:<br>
 `http://localhost:3000`
@@ -83,7 +96,7 @@ The following dependencies are used to build and run the image. Please feel feel
       # Answer all proceeding prompts
       ```
 
-5. Edit any of the files under `/app/public` after running step no. 2.
+5. Edit any of the files under `"/app/public"` after running step no. 2.
    ```
    # 1. Build the app container for localhost development.
    docker compose -f docker-compose.app.yml build
@@ -94,6 +107,36 @@ The following dependencies are used to build and run the image. Please feel feel
    # 3. Stop and remove the development containers, networks, images and volumes
    docker compose -f docker-compose.app.yml down
    ```
+
+## Uploading Data to Firebase Hosting
+
+New updates to the `dev` directory will trigger the repository's GitHub Actions workflow for deploying to Firebase Hosting.
+
+> **NOTE:** You must have Collaborator access to the repository to push new updates. You can also clone this repository and link GitHub Actions to your own Firebase Hosting project for deployment.
+
+1. Add new files or edit existing HTML, CSS, and data files in the `"/app/public"` directory.<br>
+2. Push new updates to the repository using either of the following methods (no. 3 and no. 4).
+3. Option 1: Using Git bash.
+   - Use git bash to commit and push new updates directly to the `dev` branch.
+4. Option 2: Using GitHub's Upload Files Feature
+   - ![upload-files](/app/public/assets/images/add-file.png)
+   - Navigate to the repository's `"/app/public/data"` directory using a web browser.<br>
+https://github.com/ciatph/simple-kmz/tree/cluster-points/app/public/data
+   - Press the **Add file** button on the upper right.
+      - Select the **Create new file** option to create new non-binary files.
+      - Select the **Upload Files** option to enable selecting local files for uploading..
+5. Go to the repository's [GitHub Actions](https://github.com/ciatph/simple-kmz/actions) page and click the latest running workflow triggered by your update.
+   - This workflow pushes new updates from the `dev` branch to Firebase Hosting.
+   - Wait for the workflow to finish running and observe if it will succeed or fail.
+6. Wait for the workflow to finish running and observe if it will end with success or failure.
+   - New files should be available on https://kmz-server.web.app/data/<my_new_data>.kmz (or any other file) if the workflow finishes with success.
+
+## Using the Uploaded Data
+
+1. Open the `"/app/public/template.html"`, a clustered LeafletJS example with a text editor.
+2. Go to line no. 47. Replace the value of `KMZ_DOWNLOAD_URL` with any of the new file URLs uploaded using the steps in [Uploading Data to Firebase Hosting](#uploading-data-to-firebase-hosting).
+   - ![line47](/app/public/assets/images/line47.PNG)
+3. Copy `"/app/public/template.html"`'s contents where you'd like to display the web map.
 
 @ciatph<br>
 20220225
