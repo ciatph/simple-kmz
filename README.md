@@ -130,8 +130,7 @@ https://github.com/ciatph/simple-kmz/tree/cluster-points/app/public/data
 5. Go to the repository's [GitHub Actions](https://github.com/ciatph/simple-kmz/actions) page and click the latest running workflow triggered by your update.
    - This workflow pushes new updates from the `dev` branch to Firebase Hosting.
    - Wait for the workflow to finish running and observe if it will succeed or fail.
-6. Wait for the workflow to finish running and observe if it will end with success or failure.
-   - New files should be available on https://kmz-server.web.app/data/<my_new_data>.kmz (or any other file) if the workflow finishes with success.
+6. New files should be available on https://kmz-server.web.app/data/<my_new_data>.kmz (or any other file) if the workflow finishes with success.
 
 ## Using the Uploaded Data
 
