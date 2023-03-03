@@ -1,76 +1,400 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple KMZ on Leaflet</title>
+  <title>Clustered Points from KMZ Demo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- LeafletJS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
-
-  <!-- Custom CSS -->
   <style type="text/css">
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+    :root {
+      --primary-main: #fbc02d;
+      --primary-light: #fff263;
+      --primary-lighter: #fcfade;
+      --primary-dark: #c49000;
+      --secondary-main: #bcbcbc;
+      --secondary-light: #eeeeee;
+      --secondary-dark: #8c8c8c;
+      --color-text: #000000;
     }
 
-    #map {
-      height: 100vh;
+    html, body {
+      margin: 0; padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--secondary-light);
+    }
+
+    li, p {
+      font-size: 16px;
+    }
+
+    .wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 32px;
+      padding: 48px;
       width: 100%;
     }
-  </style>
 
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-     crossorigin=""></script>
-
-  <!-- Leaflet KMZ -->
-  <script src="https://unpkg.com/leaflet-kmz@latest/dist/leaflet-kmz.js"></script>
-
-  <!-- Custom JS -->
-  <script type="text/javascript">
-    function loadMap () {
-      const map = L.map('map', {
-        preferCanvas: true
-      })
-
-      // Map center
-      const center = [16.688816956180833, 105.4852294921875]
-
-      // Map zoom
-      const zoom = 8
-
-      map.setView(center, zoom)
-
-      // Basemap
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      }).addTo(map)
-
-      // KMZ (async) Layer controller
-      const kmz = L.kmzLayer().addTo(map)
-
-      kmz.on('load', function (e) {
-        control.addOverlay(e.layer, e.name)
-      })
-
-      // Load KMZ file from a CORS-enabled web server
-      const firebase = 'https://kmz-server.web.app/LAO-CFAVC-Output-1-subprojects.kmz'
-      kmz.load(firebase)
-
-      const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
+    .wrapper-header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 48px;
+      width: 100%;
     }
-  </script>
-</head>
-<body onload="loadMap()">
-  <h1 style="text-align: center;">Consolidated Climate Risk Assessments</h1>
 
-  <!-- LeafletJS web map -->
-  <div id="map"></div>
+    .wrapper-header div {
+      text-align: justify;
+      padding-top: 0 !important;
+    }
+
+    .card {
+      padding: 16px;
+      border-radius: 16px;
+      min-height: 300px;
+      background-color: #fff;
+      text-align: cENTER;
+      box-shadow: 0 10px 40px rgb(0 0 0 / 14%);
+      padding-top: 0;
+      padding-bottom: 32px;
+    }
+
+    .card h5 {
+      font-weight: 700;
+      font-size: 30px;
+    }
+
+    a {
+      color: var(--primary-main);
+      text-decoration: none;
+    }
+
+    a:visited {
+      color: var(--primary-dark);
+    }
+
+    a:hover {
+      color: var(--secondary-dark);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 900px;
+    }
+
+    table, td, th {
+      border: 1px solid var(--secondary-dark);
+    }
+
+    td, th {
+      padding: 12px;
+    }
+
+
+    td {
+      text-align: center;
+      font-size: 12px;
+    }
+
+    tr td:first-child {
+      text-align: justify;
+      font-size: 16px;
+    }
+
+    .container {
+      width: 100%;
+
+    }
+
+    .content-wrapper {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    @media screen and (max-width: 1193px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content-wrapper">
+      <div class="wrapper-header">
+        <div class="card">
+          <h1>Goals / Requirements</h1>
+
+          <ol>
+            <li>The web map should display and render KMZ files.</li><br>
+            <li>The web map should load on any website by copying and pasting HTML codes (using URL links to 3rd party and custom web mapping libraries, styles, and scripts) anywhere, specifically on Google Site's embed script, to avoid using an external website for displaying the web map.</li><br>
+            <li>The web map should neatly display location points following the Google Earth Engine's (desktop) approach for stacked points (points that have similar [lat, lng] or are placed near each other).</li><br>
+            <li>
+              <span>Following item number 2, the web map should use a publicly-accessible web server or hosting service for storing and loading KMZ files on the web map.</span>
+              <ul>
+                <li>Specific Cross-Origin Resource Sharing (CORS) settings should be enabled on the web server or hosting service, as required by various web mapping libraries.</li>
+              </ul>
+            </li>
+          </ol>
+
+          <hr>
+
+          <h2>Things to Consider</h2>
+          <ul>
+            <li>
+              <span>Some web mapping libraries require loading KMZ files from publicly-accessible and CORS-enabled web servers or hosting services. Various web mapping libraries need to have specific CORS settings enabled.</span>
+              <ul>
+                <li><b>Needs a CORS-enabled server/hosting:</b> LeafletJS</li>
+                <ul>
+                  <li>See the <a href="https://github.com/ciatph/simple-kmz/blob/dev/firebase.json">firebase.json</a> file's headers item for more information.</li>
+                </ul>
+                <li><b>Can work without CORS:</b> Google Maps API, Mapbox GL JS (when using Mapbox resources)</li>
+              </ul>
+            </li>
+            <li>
+              <span>Some web mapping libraries can load KMZ files as-is, while others may require other formats.</span>
+              <ul>
+                <li>
+                  <b>Can load KMZ files:</b> LeafletJS, Google Maps API
+                </li>
+                <li>
+                  <b>Need other formats:</b> Mapbox GL JS (can load other formats but we used KML and GeoJSON)
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span>Web mapping libraries that require a CORS-enabled web server or hosting service will not need it if the KMZ file and requesting website resides in the same domain.<br>For example, when using LeafletJS and GitHub Pages for the KMZ file hosting service (GitHub Pages does not allow updating its CORS settings):</span>
+              <ul>
+                <li>Will work (same GitHub Pages domain):</li>
+                <ul>
+                  <li>website: <u>https://ciatph.github.io/</u>webmap-kmz/index.html</li>
+                  <li>KMZ file <u>https://ciatph.github.io/</u>webmap-kmz/philippines.kmz</li>
+                </ul>
+                <li>Will not work:</li>
+                <ul>
+                  <li>website: <u>https://sites.google.com/view/my-website/home/</u>/index.html</li>
+                  <li>KMZ file <u>https://ciatph.github.io/</u>webmap-kmz/philippines.kmz</li>
+                </ul>
+              </ul>
+            </li>
+            <li>
+              <span>Updating the CORS settings of several cloud hosting services were tested.</span>
+              <ul>
+                <li>
+                  <span>Easy to Set CORS</span>
+                  <ul>
+                    <li>Firebase Hosting</li>
+                  </ul>
+                </li>
+                <li>
+                  <span>Difficult to Set CORS (failed to setup)</span>
+                  <ul>
+                    <li>Firebase Storage</li>
+                    <li>Google Drive</li>
+                  </ul>
+                </li>
+                <li>
+                  <span>Not Allowed</span>
+                  <ul>
+                    <li>GitHub Pages</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span>CORS is easy to enable and set up on customized web server programs. These programs/servers need to be uploaded and run on cloud hosting services to be publicly accessible.</span>
+              <ul>
+                <li>CORS-enabled Express web server uploaded to Vercel</li>
+              </ul>
+            </li>
+            <li>
+              <span>Most web mapping libraries need external plugins and custom-made scripts that use these plugins to render stacking icons (geo points that have the same lat, lng, or are too near each other).</span>
+            </li>
+            <li>
+              <span>When uploading KMZ files to:</span>
+              <ul>
+                <li>
+                  <span>Firebase Hosting - requires using it's command-line interface for uploading KMZ (or other static) files.</span><br>
+                  <ul>
+                    <li>We can use GitHub Actions inside a GitHub repository as proxy for deploying KMZ files to Firebase Hosting.<br>(GitHub Actions requires minimal setup to link with Firebase Hosting)</li>
+                  </ul>
+                </li>
+                <li>
+                  <span>GitHub Pages - requires using the git command line interface or choosing the "Upload New Files" option using GitHub's web interface on a repository with GitHub Actions linked to Firebase Hosting.</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <hr>
+          <h2>Recommendations</h2>
+
+          <p>We recommend using the <b>2. Clustered LeafletJS</b> approach because it meets our Goals and wins over other criteria. <b>6. Clustered Mapbox GL JS</b> is another good option, but its clustering script is slightly complex to customize. Google Maps API has the most complex script to extend for complex customizations.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th width="40%">Criteria</th>
+                <th width="20%">LeafletJS</th>
+                <th width="20%">Mapbox GL JS</th>
+                <th width="20%">Google Maps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Open source</td>
+                <td>✅</td>
+                <td>✅ (standard usage)</td>
+                <td>❌</td>
+              </tr>
+              <tr>
+                <td>Smooth panning/zooming animations</td>
+                <td>✅</td>
+                <td>✅</td>
+                <td>❌</td>
+              </tr>
+              <tr>
+                <td>Easy to extend and customize</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+              </tr>
+              <tr>
+                <td>Can load KMZ by default</td>
+                <td>✅</td>
+                <td>❌ (KML, GeoJSON, etc)</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Can load KMZ from regular<br> (non CORS-enabled) web server / hosting </td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>KMZ file web server / cloud hosting service</td>
+                <td>✅ Firebase Hosting</td>
+                <td>✅<br>Mapbox<br>Firebase Hosting<br>GitHub Pages</td>
+                <td>✅<br>Firebase Hosting<br>GitHub Pages</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Demo / Examples</h2>
+          <p>You can the the results of using various web mapping libraries below.</p>
+        </div>
+      </div>
+
+      <main class="wrapper">
+        <div class="card">
+            <h5>1. Regular LeafletJS</h5>
+            - Uses basic LeafletJS to display a web map<br>
+            - LeafletJS needs to load KMZ file from a CORS-enabled web server:<br>
+            <label>(Firebase Hosting) https://kmz-server2.web.app/</label><br>
+            - Uses KMZ layer as is<br>
+            - Can copy + paste HTML codes to any website<br>
+            - LeafletJS is open source
+            <p>
+              <a href="/demo/leaflet.html">[ ENTER ]</a>
+            </p>
+        </div>
+
+        <div class="card" style="background-color: var(--primary-light);">
+          <div>
+            <h5>✅ 2. Clustered LeafletJS</h5>
+            - Uses basic LeafletJS to display a web map and<br>
+            - Uses the markcluster LeafletJS plugin to cluster points<br>
+            - LeafletJS needs to load KMZ file from a CORS-enabled web server:<br>
+            <label>(Firebase Hosting) https://kmz-server2.web.app/</label><br>
+            - Uses KMZ layer as is, and custom script to:<br>
+            extract (lat, lng) coordinates, text and icon from the KMZ file on the fly<br>
+            - Can copy + paste HTML codes to any website<br>
+            - LeafletJS is open source
+            <p>
+              <a href="/demo/leaflet-cluster.html">[ ENTER ]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <h5>3. Regular Google Maps</h5>
+            - Uses basic Google Maps API to display a web map and<br>
+            - Google Maps can load KMZ files from CORS-enabled or non CORS-enabled web servers:<br>
+            (Firebase Hosting) https://kmz-server2.web.app/<br>
+            (GitHub Pages) https://ciatph.github.io/webmap-kmz/<br>
+            - Uses KMZ layer as is<br>
+            - Can copy + paste HTML codes to any website<br>
+            - Google Maps API is not open source:<br>
+            It needs a billing account to work<br>
+            <p>
+              <a href="/demo/gmaps.html">[ ENTER ]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <h5>4. Clustered Google Maps</h5>
+            - Uses basic Google Maps API to display a web map and<br>
+            - Uses the @googlemaps/markerclusterer library to cluster points<br>
+            - Google Maps can load KMZ files from non CORS-enabled web servers:<br>
+            (Firebase Hosting) https://kmz-server2.web.app/<br>
+            (GitHub Pages) https://ciatph.github.io/webmap-kmz/<br>
+            - Uses KMZ layer as is<br>
+            - Can copy + paste HTML codes to any website<br>
+            - Google Maps API is not open source:<br>
+            It needs a billing account to work<br>
+            <p>
+              <a href="/demo/gmaps-cluster.html">[ ENTER ]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <h5>5. Regular Mapbox GL JS</h5>
+            - Uses basic Mapbox GL JS API to display a web map<br>
+            - Mapbox does not support KMZ files. Needs to:<br>
+              (a) extract KML file from the KMZ file and <br>(b) upload KML to MapBox as a Tileset<br>
+            - Mapbox loads rasterized KML files (as Tilesets) from it's servers<br>
+            - Can copy + paste HTML codes to any website, BUT<br>
+            (a) Needs to know the custom icons URL and pre-load the custom icons before initializing the map, if you don't want to use circles.<br>
+            (b) Letter (a) is achieved by manually extracting the KML file from the KMZ file, looking up for the custom icons URL and assigning them on the Tileset subgroups.<br>
+            - Mapbox is free to use within the standard limits<br>
+            - Mapbox needs a paid subscription for high-traffic maps and API usage<br>
+            <p>
+              <a href="/demo/mapbox.html">[ ENTER ]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="background-color: var(--primary-lighter);">
+          <div>
+            <h5>✅ 6. Clustered Mapbox GL JS</h5>
+            - Uses basic Mapbox GL JS API to display a web map<br>
+            - Mapbox has a built-in clustering library for non-Vector sources (Datasets such as GeoJSON).<br>
+            - Mapbox does not support KMZ files. Needs to:<br>
+              (a) convert KMZ to GeoJSON upload it to MapBox as a Dataset<br>
+              (b) Needs to know the custom icons URL and pre-load the custom icons before initializing the map, if you don't want to use circles:<br>
+            The custom icons URL are automatically read from the GeoJSON file.<br>
+            - Mapbox is free to use within the standard limits<br>
+            - Mapbox needs a paid subscription for high-traffic maps and API usage<br>
+            <p>
+              <a href="/demo/mapbox-cluster.html">[ ENTER ]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <h5>7. Google Earth Engine API</h5>
+            - Discontinued by Google<br>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
 </body>
 </html>

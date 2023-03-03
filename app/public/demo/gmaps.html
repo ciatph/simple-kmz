@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KMZ on Google Maps</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <style type="text/css">
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      a {
+        color: #fff263;
+        text-decoration: none;
+      }
+
+      a:hover, a:visited {
+        color: #000;
+      }
+
+      .control {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .control div:first-child {
+        width: 10%;
+        background-color: #fbc02d;
+        display: grid;
+        place-content: center;
+        font-weight: bold;
+      }
+
+      .control div:nth-child(2) {
+        width: 90%;
+      }
+
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="control">
+      <div>
+        <div class="button">
+          <a href="/">BACK</a>
+        </div>
+      </div>
+
+      <div>
+        <h1 style="text-align: center;">KMZ on Google Maps Demo</h1>
+      </div>
+    </div>
+
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAin6tDi-yJyY8VhfGrat-gqFWEwfVRYQg&callback=initMap&v=weekly"
+      defer
+    ></script>
+
+    <script>
+      // Initialize and add the map
+      function initMap() {
+        const location = { lat: 105.136608303195, lng: 16.9294289299885}
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 4,
+          center: location,
+        })
+
+        const kmzFile1 = 'https://kmz-server2.web.app/data/LAO-CFAVC-Output-1-subprojects.kmz'
+        const kmzLayer = new google.maps.KmlLayer(kmzFile1)
+        kmzLayer.setMap(map)
+      }
+
+      window.initMap = initMap
+    </script>
+  </body>
+</html>

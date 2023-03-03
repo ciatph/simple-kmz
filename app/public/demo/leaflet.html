@@ -18,9 +18,35 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+    a {
+      color: #fff263;
+      text-decoration: none;
+    }
+
+    a:hover, a:visited {
+      color: #000;
+    }
+
     #map {
       height: 100vh;
       width: 100%;
+    }
+
+    .control {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .control div:first-child {
+      width: 10%;
+      background-color: #fbc02d;
+      display: grid;
+      place-content: center;
+      font-weight: bold;
+    }
+
+    .control div:nth-child(2) {
+      width: 90%;
     }
   </style>
 
@@ -39,10 +65,10 @@
       })
 
       // Map center
-      const center = [12.419614853889797, 120.77551644707285]
+      const center = [16.688816956180833, 105.4852294921875]
 
       // Map zoom
-      const zoom = 6
+      const zoom = 8
 
       map.setView(center, zoom)
 
@@ -59,30 +85,26 @@
         control.addOverlay(e.layer, e.name)
       })
 
-      // Load a KMZ file from a CORS-enabled web server
-      const kmzFile = 'https://kmz-server2.web.app/data/subprojects.kmz'
-      kmz.load(kmzFile)
+      // Load KMZ file from a CORS-enabled web server
+      const firebase = 'https://kmz-server2.web.app/data/LAO-CFAVC-Output-1-subprojects.kmz'
+      kmz.load(firebase)
 
       const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
-
-      // Log mouse coordinates on map
-      map.addEventListener('click', function (e) {
-        const { lat, lng } = e.latlng
-        console.log(lat, lng)
-
-        let logText = '<br><b>zoom:</b> ' + map.getZoom()
-        logText += '<br><b>coordinates</b><br>'
-        logText += lat + ', ' + lng
-
-        L.marker([lat, lng]).addTo(map)
-          .bindPopup(logText)
-          .openPopup()
-      })
     }
   </script>
 </head>
 <body onload="loadMap()">
-  <h1 style="text-align: center;">Consolidated Climate Risk Assessments</h1>
+  <div class="control">
+    <div>
+      <div class="button">
+        <a href="/">BACK</a>
+      </div>
+    </div>
+
+    <div>
+      <h1 style="text-align: center;">KMZ on LeafletJS Demo</h1>
+    </div>
+  </div>
 
   <!-- LeafletJS web map -->
   <div id="map"></div>

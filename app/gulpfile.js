@@ -13,9 +13,9 @@ const server = function () {
 
 // Files to watch for changes then reload browser
 const watch = function () {
-  gulp.watch(`${root}/*.html`).on('change', browserSync.reload)
-  gulp.watch(`${root}/*.css`).on('change', browserSync.reload)
-  gulp.watch(`${root}/*.js`).on('change', browserSync.reload)
+  gulp.watch(`${root}/**/*.html`).on('change', browserSync.reload)
+  gulp.watch(`${root}/**/*.css`).on('change', browserSync.reload)
+  gulp.watch(`${root}/**/*.js`).on('change', browserSync.reload)
 }
 
 // Gulp tasks
