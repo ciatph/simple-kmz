@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple KMZ on Leaflet</title>
+
+  <!-- LeafletJS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+
+  <!-- Leaflet markercluster-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" crossorigin="" />
+
+  <!-- Custom CSS -->
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a {
+      color: #fff263;
+      text-decoration: none;
+    }
+
+    a:hover, a:visited {
+      color: #000;
+    }
+
+    .control {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .control div:first-child {
+      width: 10%;
+      background-color: #fbc02d;
+      display: grid;
+      place-content: center;
+      font-weight: bold;
+    }
+
+    .control div:nth-child(2) {
+      width: 90%;
+    }
+
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+
+  <!-- Leaflet markercluster-->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" type="text/javascript"></script>
+
+  <!-- Leaflet KMZ -->
+  <script src="https://unpkg.com/leaflet-kmz@latest/dist/leaflet-kmz.js"></script>
+
+  <!-- Custom JS -->
+  <script type="text/javascript">
+    // This demo extracts coordinates, icons and text from a KMZ file
+    // Leaflet's markercluster plugin uses location coordinates data extracted from a KMZ file
+
+    // KMZ file download URL
+    const KMZ_DOWNLOAD_URL = 'https://kmz-server.web.app/data/LAO-CFAVC-Output-1-subprojects.kmz'
+
+    function loadMap () {
+      // Initialize the map
+      const map = L.map('map', { preferCanvas: true })
+
+      // Map center
+      const center = [16.688816956180833, 105.4852294921875]
+
+      // Map zoom
+      const zoom = 8
+
+      map.setView(center, zoom)
+
+      // Basemap
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map)
+
+      // KMZ (async) Layer controller
+      const kmz = L.kmzLayer()
+
+      kmz.on('load', function (e) {
+        // Extract the coordinates, icon and description from the KMZ file
+        const locations = Object.values(e.layer._layers).map((item, id) => {
+          return {
+            icon: item.defaultOptions.icon.options,
+            coordinates: item._latlng,
+            description: item.feature.properties.description
+           }
+        })
+
+        // Initialize the markercluser markers
+        const markers = L.markerClusterGroup({ showCoverageOnHover: false })
+
+        // Attach clustered points on the map
+        locations.forEach((point, id) => {
+          const icon = L.icon({
+            iconUrl: point.icon.iconUrl,
+            iconSize: point.icon.iconSize, // size of the icon
+          })
+
+          const dot = L.marker(point.coordinates, { icon })
+            .bindPopup(point.description)
+            .openPopup()
+
+          markers.addLayer(dot)
+        })
+
+        map.addLayer(markers)
+      })
+
+      // Load KMZ file from a CORS-enabled web server
+      kmz.load(KMZ_DOWNLOAD_URL)
+
+      const control = L.control.layers(null, null, { collapsed: false }).addTo(map)
+    }
+  </script>
+</head>
+<body onload="loadMap()">
+  <div class="control">
+    <div>
+      <div class="button">
+        <a href="/">BACK</a>
+      </div>
+    </div>
+
+    <div>
+      <h1 style="text-align: center;">KMZ on LeafletJS Clustered Points Demo</h1>
+    </div>
+  </div>
+
+  <!-- LeafletJS web map -->
+  <div id="map"></div>
+</body>
+</html>
